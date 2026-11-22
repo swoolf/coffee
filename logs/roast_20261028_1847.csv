@@ -1,0 +1,11 @@
+# roaster_ctrl 3.1.0
+# profile,default
+# control,BT
+# bean,
+# batch_g,0
+# events,CHARGE@0,STOP@4
+time_s,bt_c,et_c,target_c,heater_pct,fan_pct,ror_c_per_min,event
+0,25.5,21.8,85.1,0,84,0.1,CHARGE
+1,25.5,21.8,85.4,0,84,0.1,
+2,25.5,21.7,85.6,0,84,0.0,
+3,25.4,21.8,85.9,0,84,0.0,

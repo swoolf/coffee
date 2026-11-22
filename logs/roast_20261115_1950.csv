@@ -1,0 +1,16 @@
+# roaster_ctrl 3.5.11
+# profile,kenya_spike_pb
+# control,BT
+# bean,Kenya Kiambu Spike Peaberry
+# batch_g,0
+# cascade,etKp=0.650,etKi=0.0146,etKd=0.00,btKp=1.535,btKi=0.0108,btKd=0.00,ffTau=2.38,hMin=0,hMax=100,hSlew=0.0
+# events,CHARGE@0,STOP@7
+time_s,bt_c,et_c,target_c,heater_pct,fan_pct,ror_c_per_min,event,et_sp_c,heater_ma,fan_ma,mode,heater_panel,fan_panel,interlock,fault
+0,25.2,72.2,25.2,83,72,6.3,CHARGE,90.2,15.3,15.5,A,0,0,,
+1,25.9,77.0,26.1,84,72,7.8,,95.8,17.3,15.5,A,0,0,,
+2,26.8,81.2,27.0,85,72,9.5,,101.0,17.4,15.5,A,0,0,,
+3,27.4,85.2,27.9,86,72,11.3,,106.6,17.6,15.5,A,0,0,,
+4,28.3,89.2,28.8,87,72,13.3,,111.8,17.8,15.5,A,0,0,,
+5,29.0,93.3,29.7,88,72,15.3,,117.2,18.0,15.5,A,0,0,,
+6,29.6,96.9,30.6,90,72,17.3,,123.0,18.2,15.5,A,0,0,,
+7,30.1,99.9,31.5,92,72,19.3,STOP,128.8,18.5,15.5,A,0,0,,

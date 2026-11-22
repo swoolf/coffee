@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your coffee</title>
+<base target="_top">
+<meta charset="utf-8">
+<style>
+:root{--bg:#f6efe4;--card:#fffaf2;--ink:#2b2019;--dim:#7a6a5c;--line:#e6d9c6;
+  --dry:#8fae6b;--brown:#d39b3a;--dev:#8a4b2a;--curve:#5b2f1b;--chip:#efe2cf;--air:#3f86c4;--heat:#d6493f;--ror:#8a55c4}
+@media (prefers-color-scheme:dark){:root{--bg:#16110d;--card:#211913;--ink:#f3e9dc;--dim:#b3a28f;--line:#3a2e24;
+  --dry:#9cbc79;--brown:#e0aa4c;--dev:#c47a4e;--curve:#f0c9a0;--chip:#2e241c;--air:#6fb0ea;--heat:#ff6b5f;--ror:#b48cf0}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);-webkit-text-size-adjust:100%}
+body{font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;padding:20px 16px 40px}
+.wrap{max-width:520px;margin:0 auto}
+.logo{display:block;width:132px;height:132px;margin:4px auto 10px;background:var(--ink);
+  -webkit-mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAACgCAQAAAAhxq+mAAADVklEQVR42u2d2XbDIBBDI47//5fV9za1gcEwi3hr6+OUa2k2JzE+Y4u/fsan+MI0OmEc2DqXXopiAPmKntOsthDf6NHpFchXw0J6Bc6riQJoXYUQXkMIUDfWjcUrdh1HRcLvFmYnDMjGIzGQ3WBVBw5gws1fWROgEsSLZQxVOD8B5KSRy5p4tJCm2rd5gFCMtCoQioRWC+PfmlAK7EYoiIMA2QkRAjgzhqAUOF9AqxdeMlClAM73FJACV+isMN620KqUAp9UwyGVQRbuz8dlU0kbVs6aOyZp1vwkD9PWFkDDecvEQAifNYlA+KxZGMJnLWMgfCs2TMGzb5qCZ9+4JjJakVfSm1BtG74V/U1hgKtaxKIAmRdh+2iFA0gBFMLjFk5T1GCD1p7umEAArWaFLFw2JnopYyiACeObDwUitwY9dSIUQKuNKYDlVLgHIPIi9DiNCdXmeR1nhYHoeR5IASxQhF9Cl0+Bodo/3RNJWcYIYB2EzSkQCqBioGysTqS8hQN0xP5jIAVQSUQajK5ACmBahAi1edQEuFY/kIVT1YbxFOhMi9imm+g7SAvwMMYsAI+hzAdw887yAty0v+zDhNeLngrTGGaw8Pl+FlKgy8tXaaBKAXSYUuqN9BkXIDIi3KvAhAh3WzgdQt3WFMBqAJOZ+IQCIQXmQMi4ABMhVBIRwLMaPAcQUqCWANpNLIDG5enTmhh+hjZl4fAmbkcVlyAzS4FGDfoGCCkwCizWtDDOI6wYA5c+R0pJxIiwJVXTNoTNGQhsSStYhzC+hXE2q2f4/sAZhHdP5x56C1KOJDKGkCsvZPYsjOkE1KnD5n6b1jPgRl+wv/JJgFwKFf+e/Rsmrrp4raxd2ZFSuMM8du1hoTJ4szt2qXbwdS9XxuXLCn3h+YzXcXz4+nscQhg0BgZ+HIbPT6xjySth8ghHFk75MMh9CuSB/68nizOGArn4LPCp+BbGvHTjrLCdyFN7fyTiXkH093cMMNJhhAO4qzDC53imjwrwTulb+/sWysAOV8aJNHcOLJBcf68nmzrfG/NSrkZq/W3Yu94b4+AqsDIJCJ+NRxM+236a8Nn2pCRiRAjpz0YGwmejA+GzgYTg2RBC8GwIIXw2iE34bAQgeDYVQvhsEH8AmpnH//cvZroAAAAASUVORK5CYII=) center/contain no-repeat;mask:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKAAAACgCAQAAAAhxq+mAAADVklEQVR42u2d2XbDIBBDI47//5fV9za1gcEwi3hr6+OUa2k2JzE+Y4u/fsan+MI0OmEc2DqXXopiAPmKntOsthDf6NHpFchXw0J6Bc6riQJoXYUQXkMIUDfWjcUrdh1HRcLvFmYnDMjGIzGQ3WBVBw5gws1fWROgEsSLZQxVOD8B5KSRy5p4tJCm2rd5gFCMtCoQioRWC+PfmlAK7EYoiIMA2QkRAjgzhqAUOF9AqxdeMlClAM73FJACV+isMN620KqUAp9UwyGVQRbuz8dlU0kbVs6aOyZp1vwkD9PWFkDDecvEQAifNYlA+KxZGMJnLWMgfCs2TMGzb5qCZ9+4JjJakVfSm1BtG74V/U1hgKtaxKIAmRdh+2iFA0gBFMLjFk5T1GCD1p7umEAArWaFLFw2JnopYyiACeObDwUitwY9dSIUQKuNKYDlVLgHIPIi9DiNCdXmeR1nhYHoeR5IASxQhF9Cl0+Bodo/3RNJWcYIYB2EzSkQCqBioGysTqS8hQN0xP5jIAVQSUQajK5ACmBahAi1edQEuFY/kIVT1YbxFOhMi9imm+g7SAvwMMYsAI+hzAdw887yAty0v+zDhNeLngrTGGaw8Pl+FlKgy8tXaaBKAXSYUuqN9BkXIDIi3KvAhAh3WzgdQt3WFMBqAJOZ+IQCIQXmQMi4ABMhVBIRwLMaPAcQUqCWANpNLIDG5enTmhh+hjZl4fAmbkcVlyAzS4FGDfoGCCkwCizWtDDOI6wYA5c+R0pJxIiwJVXTNoTNGQhsSStYhzC+hXE2q2f4/sAZhHdP5x56C1KOJDKGkCsvZPYsjOkE1KnD5n6b1jPgRl+wv/JJgFwKFf+e/Rsmrrp4raxd2ZFSuMM8du1hoTJ4szt2qXbwdS9XxuXLCn3h+YzXcXz4+nscQhg0BgZ+HIbPT6xjySth8ghHFk75MMh9CuSB/68nizOGArn4LPCp+BbGvHTjrLCdyFN7fyTiXkH093cMMNJhhAO4qzDC53imjwrwTulb+/sWysAOV8aJNHcOLJBcf68nmzrfG/NSrkZq/W3Yu94b4+AqsDIJCJ+NRxM+236a8Nn2pCRiRAjpz0YGwmejA+GzgYTg2RBC8GwIIXw2iE34bAQgeDYVQvhsEH8AmpnH//cvZroAAAAASUVORK5CYII=) center/contain no-repeat}
+h1{font:700 30px/1.15 Georgia,"Times New Roman",serif;text-align:center;margin:6px 0 6px;letter-spacing:-.01em}
+.where{text-align:center;color:var(--dim);font-size:15px;margin:0 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0 0 4px}
+.chip{background:var(--chip);border-radius:99px;padding:4px 11px;font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-top:16px}
+h2{font:700 13px/1 -apple-system,sans-serif;text-transform:uppercase;letter-spacing:.09em;color:var(--dim);margin:0 0 10px}
+.notes{font:19px/1.45 Georgia,serif;margin:0}
+.flav{display:flex;flex-wrap:wrap;gap:7px}
+.flav span{border:1.5px solid var(--brown);color:var(--ink);border-radius:99px;padding:3px 11px;font-size:14px}
+.when{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 8px;margin-bottom:12px}
+.when b{font:700 20px Georgia,serif;white-space:nowrap}.level{background:var(--chip);border-radius:99px;padding:3px 11px;font-size:13px;white-space:nowrap}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat{background:var(--bg);border-radius:12px;padding:8px 6px;text-align:center}
+.stat .v{font:700 20px/1.2 -apple-system,sans-serif;font-variant-numeric:tabular-nums}.stat .l{font-size:12px;color:var(--dim)}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--dim);margin:6px 0 0}
+.legend span{display:inline-flex;align-items:center;gap:6px}.legend i{display:inline-block;width:16px;height:3px;border-radius:2px}
+.hood{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.hood h3{font:700 15px/1.2 -apple-system,sans-serif;margin:0 0 2px}.hood p{font-size:13.5px;color:var(--dim);margin:0 0 8px;line-height:1.4}
+.phases{margin:12px 0 0;padding:0;list-style:none}
+.phases li{display:grid;grid-template-columns:14px 1fr auto;gap:10px;align-items:start;padding:7px 0;border-top:1px solid var(--line)}
+.phases li:first-child{border-top:0}
+.phases i{width:14px;height:14px;border-radius:4px;margin-top:4px}
+.phases b{display:block}.phases small{color:var(--dim);font-size:13.5px;line-height:1.35;display:block}
+.phases em{font-style:normal;font-variant-numeric:tabular-nums;color:var(--dim);font-size:14px;padding-top:1px}
+.foot{text-align:center;color:var(--dim);font-size:13px;margin-top:22px}
+.foot a{color:var(--dim)}
+.video{display:block;text-align:center;margin:14px auto 0;max-width:320px;padding:12px 16px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--ink);font-weight:600;text-decoration:none}
+.list a{color:var(--ink)}.list em a{color:var(--dim);font-size:13px}
+.msg{text-align:center;color:var(--dim);margin-top:30px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo" role="img" aria-label="Wolf howling at a coffee-bean moon"></div>
+  <div id="app"><p class="msg">Brewing up your coffee info…</p></div>
+</div>
+<script>
+const R=new URLSearchParams(location.search).get('r')||'';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const F=c=>c*9/5+32;
+const mmss=s=>s==null?'—':Math.floor(s/60)+':'+String(Math.round(s%60)).padStart(2,'0');
+const MON=['January','February','March','April','May','June','July','August','September','October','November','December'];
+function roastDate(id){const m=/^(\d{4})(\d\d)(\d\d)/.exec(id);return m?MON[+m[2]-1]+' '+(+m[3])+', '+m[1]:''}
+function level(dropC){if(dropC==null)return'';const f=F(dropC);
+  return f<426?'Light roast · bright & fruity':f<436?'Light-medium · bright & sweet':f<446?'Medium · sweet & round':'Medium-dark · rich & deep'}
+// "Bright acidity: orange, cherry, cocoa." -> chips from the list after the colon (or the whole thing split on commas)
+function flavours(n){if(!n)return[];let t=n.split(/[.]/)[0];if(t.indexOf(':')>=0)t=t.slice(t.indexOf(':')+1);
+  return t.split(/,| and /).map(x=>x.trim()).filter(x=>x&&x.length<28).slice(0,7)}
+function chart(d){
+  const pts=d.curve;if(!pts||pts.length<5)return'';
+  const r=d.roast,end=r.total||pts[pts.length-1][0];
+  const W=340,H=210,L=34,Rm=8,T=26,B=24,iw=W-L-Rm,ih=H-T-B;
+  const ys=pts.map(p=>F(p[1])).concat(pts.filter(p=>p[2]!=null).map(p=>F(p[2])));const y0=Math.floor((Math.min(...ys)-10)/50)*50,y1=Math.ceil((Math.max(...ys)+15)/50)*50;
+  const X=t=>L+t/end*iw,Y=v=>T+ih-(v-y0)/(y1-y0)*ih;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Bean temperature during the roast">`;
+  // phase bands
+  const band=(a,b,col,label)=>{if(a==null||b==null||b<=a)return;
+    s+=`<rect x="${X(a)}" y="${T}" width="${X(b)-X(a)}" height="${ih}" fill="${col}" opacity=".18"/>`;
+    s+=`<text x="${(X(a)+X(b))/2}" y="${T+ih-6}" text-anchor="middle" font-size="10.5" fill="${col}" font-weight="700">${label}</text>`};
+  band(0,r.dry,'var(--dry)','Drying');band(r.dry,r.fc,'var(--brown)','Browning');band(r.fc,end,'var(--dev)','Dev');
+  // grid
+  for(let v=y0;v<=y1;v+=50){s+=`<line x1="${L}" x2="${W-Rm}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--line)"/>`+
+    `<text x="${L-5}" y="${Y(v)+4}" text-anchor="end" font-size="10" fill="var(--dim)">${v}°</text>`}
+  for(let m=0;m*60<=end;m+=2)s+=`<text x="${X(m*60)}" y="${H-6}" text-anchor="middle" font-size="10" fill="var(--dim)">${m} min</text>`;
+  // hot air (ET) under the beans (BT)
+  s+=line(pts,2,X,v=>Y(F(v)),'var(--air)',2,'',.85);
+  s+=line(pts,5,X,v=>Y(F(v)),'var(--dim)',1.6,'2 4');   // the profile the roaster was following
+  s+=line(pts,1,X,v=>Y(F(v)),'var(--curve)',3);
+  // moments
+  const at=t=>{let best=pts[0];for(const p of pts)if(p[0]<=t)best=p;return F(best[1])};
+  const mark=(t,label,dy,anchor)=>{if(t==null)return;const x=X(t),y=Y(at(t));
+    s+=`<circle cx="${x}" cy="${y}" r="5" fill="var(--card)" stroke="var(--curve)" stroke-width="2.5"/>`+
+      `<text x="${x+(anchor==='end'?-8:8)}" y="${y+dy}" text-anchor="${anchor||'start'}" font-size="11.5" font-weight="700" fill="var(--ink)">${label}</text>`};
+  mark(r.dry,'Drying done',-9,'end');
+  // the last two moments sit close together near the top: labels go above the chart with a dotted line down
+  const flag=(t,label,dx)=>{if(t==null)return;const x=X(t),y=Y(at(t));
+    s+=`<line x1="${x}" x2="${x}" y1="${T-4}" y2="${y-6}" stroke="var(--curve)" stroke-dasharray="2 3" opacity=".7"/>`+
+      `<circle cx="${x}" cy="${y}" r="5" fill="var(--card)" stroke="var(--curve)" stroke-width="2.5"/>`+
+      `<text x="${x+dx}" y="${T-8}" text-anchor="end" font-size="11.5" font-weight="700" fill="var(--ink)">${label}</text>`};
+  flag(r.fc,'First crack!',-4);flag(end,'Done',4);
+  return s+'</svg>';
+}
+// polyline through column k of the points, broken where a value is missing
+function line(pts,k,X,Yf,col,w,dash,op){
+  let d='',pen=false;
+  for(const p of pts){if(p[k]==null){pen=false;continue}d+=(pen?'L':'M')+X(p[0]).toFixed(1)+' '+Yf(p[k]).toFixed(1);pen=true}
+  return d?`<path d="${d}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"${dash?` stroke-dasharray="${dash}"`:''}${op?` opacity="${op}"`:''}/>`:'';
+}
+// under the hood: rate of rise (F/min, left) and heater (%, right, shaded)
+function hood(d){
+  const pts=d.curve;if(!pts||pts.length<5||!pts.some(p=>p[4]!=null))return'';
+  const r=d.roast,end=r.total||pts[pts.length-1][0];
+  const W=340,H=170,L=34,Rm=30,T=10,B=24,iw=W-L-Rm,ih=H-T-B;
+  const rors=pts.filter(p=>p[4]!=null).map(p=>p[4]*9/5);
+  const r1=Math.min(100,Math.ceil((Math.max(...rors)+2)/20)*20);
+  const X=t=>L+t/end*iw,Yr=v=>T+ih-Math.max(0,Math.min(v,r1))/r1*ih,Yh=v=>T+ih-v/100*ih;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Rate of rise and heater power">`;
+  for(let k=0;k<=4;k++){const y=T+ih*k/4;s+=`<line x1="${L}" x2="${W-Rm}" y1="${y}" y2="${y}" stroke="var(--line)"/>`+
+    `<text x="${L-5}" y="${y+4}" text-anchor="end" font-size="10" fill="var(--ror)">${Math.round(r1*(1-k/4))}</text>`+
+    `<text x="${W-Rm+5}" y="${y+4}" font-size="10" fill="var(--heat)">${100-25*k}%</text>`}
+  for(let m=0;m*60<=end;m+=2)s+=`<text x="${X(m*60)}" y="${H-6}" text-anchor="middle" font-size="10" fill="var(--dim)">${m} min</text>`;
+  // heater as a soft area
+  const hp=pts.filter(p=>p[3]!=null);
+  if(hp.length)s+=`<path d="M${X(hp[0][0])} ${Yh(0)}${hp.map(p=>'L'+X(p[0]).toFixed(1)+' '+Yh(p[3]).toFixed(1)).join('')}L${X(hp[hp.length-1][0])} ${Yh(0)}Z" fill="var(--heat)" opacity=".16"/>`;
+  s+=line(pts,3,X,Yh,'var(--heat)',1.8);
+  s+=line(pts,4,X,v=>Yr(v*9/5),'var(--ror)',2.6);
+  if(r.fc!=null)s+=`<line x1="${X(r.fc)}" x2="${X(r.fc)}" y1="${T}" y2="${T+ih}" stroke="var(--dim)" stroke-dasharray="2 3"/><text x="${X(r.fc)-4}" y="${T+11}" text-anchor="end" font-size="10.5" fill="var(--dim)">first crack</text>`;
+  return s+'</svg>';
+}
+function render(d){
+  if(!d||d.error){$('#app').innerHTML=`<p class="msg">Couldn't find this roast (${esc(d&&d.error)}).</p>`;return}
+  const r=d.roast,where=[d.farm,d.region,d.country].filter(Boolean).join(', ');
+  const chips=[d.process&&d.process.replace(/\s*\(.*\)/,''),d.varieties,d.score&&d.score+' points'].filter(Boolean);
+  const browning=r.dry!=null&&r.fc!=null?r.fc-r.dry:null,devS=r.dev!=null?r.dev:(r.fc!=null&&r.total?r.total-r.fc:null);
+  document.title=d.coffee;
+  $('#app').innerHTML=`
+  <h1>${esc(d.coffee)}</h1>
+  ${where?`<p class="where">${esc(where)}</p>`:''}
+  ${chips.length?`<div class="chips">${chips.map(c=>`<span class="chip">${esc(c)}</span>`).join('')}</div>`:''}
+  ${d.notes?`<div class="card"><h2>Tasting notes</h2><p class="notes">${esc(d.notes)}</p></div>`:''}
+  <div class="card">
+    <h2>This roast</h2>
+    <div class="when"><b>${esc(roastDate(r.id))}</b>${r.dropBt!=null?`<span class="level">${esc(level(r.dropBt))}</span>`:''}</div>
+    <div class="stats">
+      <div class="stat"><div class="v">${mmss(r.total)}</div><div class="l">roast time</div></div>
+      <div class="stat"><div class="v">${mmss(r.fc)}</div><div class="l">first crack</div></div>
+      <div class="stat"><div class="v">${mmss(devS)}</div><div class="l">after crack</div></div>
+    </div>
+    ${chart(d)}
+    <div class="legend"><span><i style="background:var(--curve)"></i>Beans</span><span><i style="background:var(--air)"></i>Hot air</span><span><i style="background:none;border-top:2px dotted var(--dim);height:0"></i>Profile</span></div>
+    <ul class="phases">
+      <li><i style="background:var(--dry)"></i><div><b>Drying</b><small>The green beans give up their water and turn pale yellow.</small></div><em>${mmss(r.dry)}</em></li>
+      <li><i style="background:var(--brown)"></i><div><b>Browning</b><small>Sugars caramelise and the flavours build. Smells like toast and fresh bread.</small></div><em>${mmss(browning)}</em></li>
+      <li><i style="background:var(--dev)"></i><div><b>Development</b><small>From first crack to done. Short keeps it bright and fruity; longer makes it sweeter and rounder.</small></div><em>${mmss(devS)}</em></li>
+    </ul>
+    ${hood(d)?`<div class="hood"><h3>Under the hood</h3>
+      <p>How fast the beans were heating up, and how hard the heater was working. A smooth, steady fall in the purple line is the goal.</p>
+      ${hood(d)}
+      <div class="legend"><span><i style="background:var(--ror)"></i>Rate of rise (°F per min)</span><span><i style="background:var(--heat)"></i>Heater power</span></div></div>`:''}
+  </div>
+  <p class="foot">${d.supplier?`Green coffee from ${d.url?`<a href="${esc(d.url)}">${esc(d.supplier)}</a>`:esc(d.supplier)} · `:''}roasted at home<br>
+    <a href="logs/roast_${encodeURIComponent(R)}.csv">Full roast data (CSV)</a> · <a href="./">All roasts</a></p>
+  <a class="video" href="https://www.youtube.com/watch?v=nu-5udv0YCg" target="_blank" rel="noopener">&#9654;&nbsp; Watch the roaster in action</a>`;
+}
+
+function fmtDate(id){const m=/^(\d{4})(\d\d)(\d\d)_(\d\d)(\d\d)/.exec(id);if(!m)return id;
+  return MON[+m[2]-1].slice(0,3)+' '+(+m[3])+', '+m[1]}
+function renderList(all,showShort){
+  document.title='Roasts';
+  if(!all||!all.length){$('#app').innerHTML='<p class="msg">No roasts yet.</p>';return}
+  const rs=showShort?all:all.filter(x=>x.total>=300),hidden=all.length-rs.length;
+  const groups={};rs.forEach(x=>{(groups[x.coffee]=groups[x.coffee]||[]).push(x)});
+  const order=Object.keys(groups).sort((a,b)=>groups[b][0].id.localeCompare(groups[a][0].id));
+  window.ALL=all;
+  $('#app').innerHTML=`<h1>Roasts</h1><p class="where">${rs.length} roasts, newest first. Tap one for its card.`+
+    (hidden?` <a href="#" onclick="renderList(ALL,1);return false">Show ${hidden} short test runs</a>`:'')+`</p>`+
+    order.map(c=>`<div class="card"><h2>${esc(c)}</h2><ul class="phases list">${groups[c].map(x=>`
+      <li><i style="background:var(--brown)"></i><div><a href="?r=${encodeURIComponent(x.id)}"><b>${esc(fmtDate(x.id))}</b></a>
+      <small>${mmss(x.total)} total · FC ${mmss(x.fc)} · after crack ${mmss(x.dev)}${x.dropBt!=null?' · drop '+Math.round(F(x.dropBt))+'°F':''}</small></div>
+      <em><a href="logs/roast_${encodeURIComponent(x.id)}.csv">csv</a></em></li>`).join('')}</ul></div>`).join('');
+}
+if(!R)fetch('roasts.json').then(x=>x.json()).then(renderList).catch(e=>render({error:String(e.message||e)}));
+else if(!/^[0-9]{8}_[0-9]{4}$/.test(R))render({error:'bad roast id'});
+else fetch('r/'+R+'.json').then(x=>{if(!x.ok)throw new Error('not found');return x.json()}).then(render).catch(e=>render({error:String(e.message||e)}));
+</script>
+</body>
+</html>

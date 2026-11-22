@@ -1,0 +1,19 @@
+# roaster_ctrl 3.5.4
+# profile,ethiopia_buku_abel_dp
+# control,BT
+# bean,Ethiopia Dry Process Buku Abel
+# batch_g,0
+# cascade,etKp=1.000,etKi=0.0500,etKd=0.00,btKp=2.000,btKi=0.0200,btKd=0.00,ffTau=1.50,hMin=0,hMax=100,hSlew=0.0
+# events,CHARGE@0,DRY@5,FCs@7,DROP@11
+time_s,bt_c,et_c,target_c,heater_pct,fan_pct,ror_c_per_min,event,et_sp_c,heater_ma,fan_ma,mode,heater_panel,fan_panel,interlock,fault
+0,26.0,24.1,25.2,0,12,0.0,CHARGE,57.0,0.0,2.2,A,0,0,fan below minimum,
+1,26.0,24.0,25.9,0,12,0.1,,61.4,0.0,2.2,A,0,0,fan below minimum,
+2,26.0,24.0,26.6,0,12,0.1,,65.8,0.0,2.2,A,0,0,fan below minimum,
+3,26.0,24.0,27.4,0,12,0.2,,70.2,0.0,2.2,A,0,0,fan below minimum,
+4,26.0,24.0,28.1,0,12,0.2,,74.7,0.0,2.2,A,0,0,fan below minimum,
+5,26.0,24.0,28.8,0,12,0.2,DRY,79.1,0.0,2.2,A,0,0,fan below minimum,
+6,25.9,24.1,29.6,0,12,0.1,,83.7,0.0,2.2,A,0,0,fan below minimum,
+7,26.0,24.0,30.3,0,12,0.1,FCs,88.0,0.0,2.2,A,0,0,fan below minimum,
+8,25.9,24.1,31.0,0,12,0.1,,92.5,0.0,2.2,A,0,0,fan below minimum,
+9,25.9,24.1,31.8,0,12,0.1,,96.9,0.0,2.2,A,0,0,fan below minimum,
+10,26.0,24.1,32.5,0,12,0.1,,101.2,0.0,2.2,A,0,0,fan below minimum,

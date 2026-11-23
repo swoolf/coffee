@@ -45,6 +45,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .foot a{color:var(--dim)}
 .video{display:block;text-align:center;margin:14px auto 0;max-width:320px;padding:12px 16px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--ink);font-weight:600;text-decoration:none}
 .list a{color:var(--ink)}.list em a{color:var(--dim);font-size:13px}
+.nowc h2{display:flex;align-items:center;gap:8px}.nowname{font-size:20px;font-weight:700;margin:2px 0 0}.nowclock{font-size:34px;font-weight:700;margin:8px 0 6px;font-variant-numeric:tabular-nums}.nowclock small{font-size:15px;font-weight:400;color:var(--dim)}.nowsub{color:var(--dim);font-size:14.5px;margin:6px 0 0}.nowbar{height:10px;border-radius:5px;background:var(--line);overflow:hidden}.nowbar i{display:block;height:100%}.livedot{width:9px;height:9px;border-radius:50%;background:var(--heat);animation:pulse 1.6s infinite}@keyframes pulse{50%{opacity:.25}}
 .msg{text-align:center;color:var(--dim);margin-top:30px}
 </style>
 </head>
@@ -172,13 +173,35 @@ function renderList(all,showShort){
   const groups={};rs.forEach(x=>{(groups[x.coffee]=groups[x.coffee]||[]).push(x)});
   const order=Object.keys(groups).sort((a,b)=>groups[b][0].id.localeCompare(groups[a][0].id));
   window.ALL=all;
-  $('#app').innerHTML=`<h1>Roasts</h1><p class="where">${rs.length} roasts, newest first. Tap one for its card.`+
+  $('#app').innerHTML=`<div id="now"></div><h1>Roasts</h1><p class="where">${rs.length} roasts, newest first. Tap one for its card.`+
     (hidden?` <a href="#" onclick="renderList(ALL,1);return false">Show ${hidden} short test runs</a>`:'')+`</p>`+
     order.map(c=>`<div class="card"><h2>${esc(c)}</h2><ul class="phases list">${groups[c].map(x=>`
       <li><i style="background:var(--brown)"></i><div><a href="?r=${encodeURIComponent(x.id)}"><b>${esc(fmtDate(x.id))}</b></a>
       <small>${mmss(x.total)} total · FC ${mmss(x.fc)} · after crack ${mmss(x.dev)}${x.dropBt!=null?' · drop '+Math.round(F(x.dropBt))+'°F':''}</small></div>
       <em><a href="logs/roast_${encodeURIComponent(x.id)}.csv">csv</a></em></li>`).join('')}</ul></div>`).join('');
+  loadNow();
 }
+// "What's roasting now": now.json is pushed by the coffee hub at Preheat, Charge, first crack, Drop and every
+// ~2.5 min in between; GitHub Pages serves it about a minute late. Older than 8 min = the roaster went quiet.
+let NOW=null,NOWT=null;
+function loadNow(){fetch('now.json?'+Date.now(),{cache:'no-store'}).then(x=>x.ok?x.json():null).then(n=>{NOW=n;drawNow()}).catch(()=>{});
+  clearInterval(NOWT);NOWT=setInterval(()=>{drawNow()},1000);clearTimeout(loadNow.t);loadNow.t=setTimeout(loadNow,60000)}
+function drawNow(){
+  const el=document.getElementById('now');if(!el)return;const n=NOW,now=Date.now()/1000;
+  if(!n||n.state==='idle'||now-n.updated>480){el.innerHTML='<p class="where" style="text-align:center;margin:0 0 6px">Not roasting right now.</p>';return}
+  const name=esc(n.coffee||'a coffee')+(n.version?` <span style="color:var(--dim);font-weight:400">${esc(n.version)}</span>`:'');
+  const dot='<span class="livedot"></span>';
+  if(n.state==='preheating'){el.innerHTML=`<div class="card nowc"><h2>${dot}Warming up</h2><p class="nowname">${name}</p><p class="nowsub">The roaster is heating up. Beans go in soon.</p></div>`;return}
+  if(n.state==='cooling'){el.innerHTML=`<div class="card nowc"><h2>Just roasted</h2><p class="nowname">${name}</p><p class="nowsub">${n.drop?mmss(n.drop)+' roast':''}${n.fc!=null?' · first crack at '+mmss(n.fc):''}. Cooling the beans now.</p></div>`;return}
+  const t=Math.max(0,Math.round(now-n.charge)),plan=n.planned||600,pct=Math.min(100,t/plan*100);
+  const phase=n.fc!=null?['Development','After first crack: the last stretch, sweetness and body.','var(--dev)']
+    :(n.bt!=null&&n.bt<150&&t<300)?['Drying','Water is leaving the beans. Smells like grass and hay.','var(--dry)']
+    :['Browning','Sugars caramelise and the flavours build. Smells like toast and fresh bread.','var(--brown)'];
+  el.innerHTML=`<div class="card nowc"><h2>${dot}Roasting now</h2><p class="nowname">${name}</p>
+    <p class="nowclock">${mmss(t)}<small> of about ${mmss(plan)}</small></p>
+    <div class="nowbar"><i style="width:${pct.toFixed(1)}%;background:${phase[2]}"></i></div>
+    <p style="margin:8px 0 0"><b style="color:${phase[2]}">${phase[0]}</b> · ${phase[1]}</p>
+    <p class="nowsub">${n.fc!=null?'First crack at '+mmss(n.fc)+'. ':''}${n.bt!=null?'Beans were '+Math.round(F(n.bt))+'°F at the last update. ':''}Updates every couple of minutes.</p></div>`}
 if(!R)fetch('roasts.json').then(x=>x.json()).then(renderList).catch(e=>render({error:String(e.message||e)}));
 else if(!/^[0-9]{8}_[0-9]{4}$/.test(R))render({error:'bad roast id'});
 else fetch('r/'+R+'.json').then(x=>{if(!x.ok)throw new Error('not found');return x.json()}).then(render).catch(e=>render({error:String(e.message||e)}));

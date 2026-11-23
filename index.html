@@ -166,7 +166,7 @@ function render(d){
   wireHow();
 }
 
-const INBOX='';
+const INBOX='https://script.google.com/macros/s/AKfycbwdtnraCj_b5Tl7gpWm5lTJz2hAPJcqM0ZAAEFa8KnqJsw2Bsv38ayROJyd4aaW7HaT/exec';
 // forms post to the Apps Script inbox; no-cors = we can't read the reply, so a sent form just says thanks
 function sendInbox(f,fields,done){
   if(f.elements.website&&f.elements.website.value)return;

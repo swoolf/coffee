@@ -45,7 +45,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .foot a{color:var(--dim)}
 .video{display:block;text-align:center;margin:14px auto 0;max-width:320px;padding:12px 16px;border-radius:99px;background:var(--card);border:1px solid var(--line);color:var(--ink);font-weight:600;text-decoration:none}
 .list a{color:var(--ink)}.list em a{color:var(--dim);font-size:13px}
-.cname{font-size:19px;font-weight:700;margin:0}.cwhere{color:var(--dim);margin:2px 0 8px;font-size:14.5px}.cnotes{margin:10px 0 0;font-size:15px;line-height:1.45}.cmeta{color:var(--dim);font-size:13.5px;margin:8px 0 0}.cmeta a{color:var(--ink)}.shelf .chips{margin:0}.rq,.form button{margin-top:12px;font:inherit;font-weight:650;font-size:15px;padding:10px 16px;border-radius:12px;border:0;background:var(--ink);color:var(--bg);cursor:pointer}.form button:disabled{opacity:.5}.form{display:flex;flex-direction:column;gap:8px;margin-top:10px}.form input,.form textarea{font:inherit;font-size:16px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}.form textarea{min-height:80px;resize:vertical}.form button{align-self:flex-start;margin-top:2px}.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}.thanks{margin:12px 0 0;font-weight:600}
+.cname{font-size:19px;font-weight:700;margin:0}.cwhere{color:var(--dim);margin:2px 0 8px;font-size:14.5px}.cnotes{margin:10px 0 0;font-size:15px;line-height:1.45}.cmeta{color:var(--dim);font-size:13.5px;margin:8px 0 0}.cmeta a{color:var(--ink)}.shelf .chips{margin:0}.rq,.form button{margin-top:12px;font:inherit;font-weight:650;font-size:15px;padding:10px 16px;border-radius:12px;border:0;background:var(--ink);color:var(--bg);cursor:pointer}.form button:disabled{opacity:.5}.form{display:flex;flex-direction:column;gap:8px;margin-top:10px}.form input,.form textarea{font:inherit;font-size:16px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}.form textarea{min-height:80px;resize:vertical}.form button{align-self:flex-start;margin-top:2px}@media (min-width:760px){body.listpage .wrap{max-width:1180px}body.listpage{padding:24px 28px 48px}.shelfgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start;margin-bottom:28px}.shelfgrid .card{margin-top:0}.rgroups{columns:2;column-gap:16px}.rgroups .card{break-inside:avoid;display:inline-block;width:100%;box-sizing:border-box;margin:0 0 16px}body.listpage .logo{width:96px;height:96px}}@media (min-width:1100px){.shelfgrid{grid-template-columns:repeat(3,minmax(0,1fr))}.rgroups{columns:3}}.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}.thanks{margin:12px 0 0;font-weight:600}
 .msg{text-align:center;color:var(--dim);margin-top:30px}
 </style>
 </head>
@@ -175,7 +175,7 @@ function sendInbox(f,fields,done){
   fetch(INBOX,{method:'POST',mode:'no-cors',body:b}).then(()=>done(true)).catch(()=>done(false))}
 function shelf(cs){
   if(!cs||!cs.length)return '';
-  return `<h1>Ready to roast</h1><p class="where">Green coffees on my shelf right now. ${INBOX?"Ask for one and I'll roast you some.":''}</p>`+
+  return `<h1>Ready to roast</h1><p class="where">Green coffees on my shelf right now. ${INBOX?"Ask for one and I'll roast you some.":''}</p><div class="shelfgrid">`+
     cs.map(c=>{const where=[c.region,c.country].filter(Boolean).join(', ');
       const chips=[c.process&&c.process.replace(/\s*\(.*\)/,''),c.varieties&&!/not given/i.test(c.varieties)?c.varieties:''].filter(Boolean);
       const sn=String(c.notes||'');
@@ -183,7 +183,7 @@ function shelf(cs){
       ${chips.length?`<div class="chips" style="justify-content:flex-start">${chips.map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div>`:''}
       ${sn?`<p class="cnotes">${esc(sn.length>240?sn.slice(0,sn.lastIndexOf(' ',237))+'…':sn)}</p>`:''}
       <p class="cmeta">${c.roasts?`Roasted ${c.roasts}× · <a href="?r=${encodeURIComponent(c.last)}">latest roast</a>`:'Not roasted yet'}</p>
-      ${INBOX?`<button class="rq" data-c="${esc(c.slug)}">Request this coffee</button>`:''}<div class="rqf" id="rq_${esc(c.slug)}"></div></div>`}).join('')}
+      ${INBOX?`<button class="rq" data-c="${esc(c.slug)}">Request this coffee</button>`:''}<div class="rqf" id="rq_${esc(c.slug)}"></div></div>`}).join('')+'</div>'}
 function wireShelf(){document.querySelectorAll('button.rq').forEach(b=>b.onclick=()=>{
   const slug=b.dataset.c,box=document.getElementById('rq_'+slug);b.style.display='none';
   box.innerHTML=`<form class="form"><input name="name" placeholder="Your name" maxlength="60" required>
@@ -206,7 +206,7 @@ function wireHow(){const box=document.getElementById('how');if(!box)return;const
 function fmtDate(id){const m=/^(\d{4})(\d\d)(\d\d)_(\d\d)(\d\d)/.exec(id);if(!m)return id;
   return MON[+m[2]-1].slice(0,3)+' '+(+m[3])+', '+m[1]}
 function renderList(all,showShort){
-  document.title='Roasts';
+  document.title='Coffee';document.body.classList.add('listpage');
   if(!all||!all.length){$('#app').innerHTML='<p class="msg">No roasts yet.</p>';return}
   const rs=showShort?all:all.filter(x=>x.total>=300),hidden=all.length-rs.length;
   const groups={};rs.forEach(x=>{(groups[x.coffee]=groups[x.coffee]||[]).push(x)});
@@ -214,10 +214,10 @@ function renderList(all,showShort){
   window.ALL=all;
   $('#app').innerHTML=shelf(window.SHELF)+`<h1>Roasts</h1><p class="where">${rs.length} roasts, newest first. Tap one for its card.`+
     (hidden?` <a href="#" onclick="renderList(ALL,1);return false">Show ${hidden} short test runs</a>`:'')+`</p>`+
-    order.map(c=>`<div class="card"><h2>${esc(c)}</h2><ul class="phases list">${groups[c].map(x=>`
+    '<div class="rgroups">'+order.map(c=>`<div class="card"><h2>${esc(c)}</h2><ul class="phases list">${groups[c].map(x=>`
       <li><i style="background:var(--brown)"></i><div><a href="?r=${encodeURIComponent(x.id)}"><b>${esc(fmtDate(x.id))}</b></a>
       <small>${mmss(x.total)} total · FC ${mmss(x.fc)} · after crack ${mmss(x.dev)}${x.dropBt!=null?' · drop '+Math.round(F(x.dropBt))+'°F':''}</small></div>
-      <em><a href="logs/roast_${encodeURIComponent(x.id)}.csv">csv</a></em></li>`).join('')}</ul></div>`).join('');
+      <em><a href="logs/roast_${encodeURIComponent(x.id)}.csv">csv</a></em></li>`).join('')}</ul></div>`).join('')+'</div>';
   wireShelf();
 }
 if(!R)Promise.all([fetch('roasts.json').then(x=>x.json()),fetch('coffees.json').then(x=>x.ok?x.json():[]).catch(()=>[])]).then(([a,c])=>{window.SHELF=c;renderList(a)}).catch(e=>render({error:String(e.message||e)}));

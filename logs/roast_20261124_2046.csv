@@ -3,6 +3,7 @@
 # control,BT
 # bean,Decaf Ethiopia Uraga (SWP)
 # batch_g,275
+# roasted_g,241
 # cascade,etKp=0.900,etKi=0.0200,etKd=0.00,btKp=3.000,btKi=0.0250,btKd=0.00,ffTau=3.50,hMin=0,hMax=100,hSlew=0.0
 # events,CHARGE@0,FCs@458,DROP@540
 time_s,bt_c,et_c,target_c,heater_pct,fan_pct,ror_c_per_min,event,et_sp_c,heater_ma,fan_ma,mode,heater_panel,fan_panel,interlock,fault
